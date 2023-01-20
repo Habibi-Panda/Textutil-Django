@@ -1,0 +1,8 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+#textarea{
+    background-color: black;
+    -webkit-text-fill-color: aliceblue;
+}
