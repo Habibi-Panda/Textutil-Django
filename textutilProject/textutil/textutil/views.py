@@ -5,14 +5,14 @@ def index(request):
     return render(request,'index.html')
 
 def analyzer(request):
-    text= request.GET.get('textarea')
-    print(text)
-    removepunc =request.GET.get('removepunc','off')
-    uppercase =request.GET.get('uppercase','off')
-    newlineremover = request.GET.get('newlineremover', 'off')
-    extraspaceremover = request.GET.get('extraspaceremover', 'off')
-    charcount = request.GET.get('charcount', 'off')
-    print(removepunc)
+    text= request.POST.get('textarea')
+    # print(text)
+    removepunc =request.POST.get('removepunc','off')
+    uppercase =request.POST.get('uppercase','off')
+    newlineremover = request.POST.get('newlineremover', 'off')
+    extraspaceremover = request.POST.get('extraspaceremover', 'off')
+    charcount = request.POST.get('charcount', 'off')
+    # print(removepunc)
     if removepunc == "on":
         analyze=""
         punctuations = '''!()-[]{};:'"\,<>./?@#$%^&*_~'''
@@ -20,6 +20,7 @@ def analyzer(request):
             if char not in punctuations:
                 analyze = analyze + char
         params = {"purpuse":"Remove Punctuations","analyze":analyze}
+        text = analyze
         # return render(request,"analyzer.html",params)
 
     if(uppercase == "on"):
@@ -33,8 +34,10 @@ def analyzer(request):
     if(newlineremover == "on"):
         analyze=""
         for char in text:
-            if char != '\n':
+            if char != '\n'and char !='\r':
                 analyze = analyze + char
+            else:
+                return HttpResponse("no")
         params = {"purpuse":"Remove New Line","analyze":analyze}
         # return render(request,"analyzer.html",params)
         text = analyze
@@ -55,12 +58,12 @@ def analyzer(request):
                 analyze=analyze+1
         params = {"purpuse": "Remove Extra Space", "analyze": analyze}
         # return render(request, "analyzer.html", params)
-        text = analyze
 
-    if (removepunc != "on" and uppercase != "on" and newlineremover != "on" and charcount != "on"):
+    if (removepunc != "on" and uppercase != "on" and newlineremover != "on" and charcount != "on" and extraspaceremover != "on"):
         return HttpResponse('Please enter your value')
-        
+
     return render(request,"analyzer.html",params)
+        
     # merge=text+'<br>'+removepunc
     # return HttpResponse(merge)
 

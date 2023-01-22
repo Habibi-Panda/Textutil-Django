@@ -37,7 +37,7 @@
         </div>
     </nav>
     <div class="container">
-        <form action="/analyzer" method="get">
+        <form action="/analyzer" method="post"> {% csrf_token %}
         <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">Please Enter your text below</label>
             <textarea class="form-control" name="textarea" id="exampleFormControlTextarea1" rows="3"></textarea>
