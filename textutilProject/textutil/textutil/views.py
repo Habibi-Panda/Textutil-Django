@@ -20,14 +20,15 @@ def analyzer(request):
             if char not in punctuations:
                 analyze = analyze + char
         params = {"purpuse":"Remove Punctuations","analyze":analyze}
-        return render(request,"analyzer.html",params)
+        # return render(request,"analyzer.html",params)
 
     if(uppercase == "on"):
         analyze=""
         for char in text:
             analyze = analyze + char.upper()
         params = {"purpuse":"Change Text into Uppercase","analyze":analyze}
-        return render(request,"analyzer.html",params)
+        # return render(request,"analyzer.html",params)
+        text = analyze
 
     if(newlineremover == "on"):
         analyze=""
@@ -35,7 +36,8 @@ def analyzer(request):
             if char != '\n':
                 analyze = analyze + char
         params = {"purpuse":"Remove New Line","analyze":analyze}
-        return render(request,"analyzer.html",params)
+        # return render(request,"analyzer.html",params)
+        text = analyze
 
     if(extraspaceremover == "on"):
         analyze=""
@@ -43,7 +45,8 @@ def analyzer(request):
             if not(text[i]==" " and text[i+1] =="  "):
                 analyze = analyze + char
         params = {"purpuse":"Remove Extra Space","analyze":analyze}
-        return render(request,"analyzer.html",params)
+        # return render(request,"analyzer.html",params)
+        text = analyze
 
     if (charcount == "on"):
         analyze = 0
@@ -51,10 +54,13 @@ def analyzer(request):
             if text[i] != "":
                 analyze=analyze+1
         params = {"purpuse": "Remove Extra Space", "analyze": analyze}
-        return render(request, "analyzer.html", params)
+        # return render(request, "analyzer.html", params)
+        text = analyze
 
-    else:
-        return HttpResponse(text)
+    if (removepunc != "on" and uppercase != "on" and newlineremover != "on" and charcount != "on"):
+        return HttpResponse('Please enter your value')
+        
+    return render(request,"analyzer.html",params)
     # merge=text+'<br>'+removepunc
     # return HttpResponse(merge)
 
